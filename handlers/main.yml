@@ -2,6 +2,7 @@
 # handlers file for ricsanfre.firewall
 # Reload will avoid to loose Nftables rulebase if an invalid syntax is added
 - name: Reload nftables service
-  systemd:
+  ansible.builtin.systemd:
     state: 'reloaded'
     name: '{{ firewall_service_name }}'
+  when: firewall_apply

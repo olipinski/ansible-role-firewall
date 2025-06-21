@@ -6,70 +6,74 @@
   gather_facts: false
   tasks:
 
-  - name: check for nftables.d
-    stat:
+  - name: Check for nftables.d
+    ansible.builtin.stat:
       path: /etc/nftables.d
     register: p
 
-  - name: check nftables.d
-    assert:
+  - name: Check nftables.d
+    ansible.builtin.assert:
       that:
-        - p.stat.exists and p.stat.isdir
+      - p.stat.exists and p.stat.isdir
 
-  - name: check for nftables.conf
-    stat:
+  - name: Check for nftables.conf
+    ansible.builtin.stat:
       path: /etc/nftables.conf
     register: p
 
-  - name: check nftables.conf
-    assert:
+  - name: Check nftables.conf
+    ansible.builtin.assert:
       that:
-        - p.stat.exists
+      - p.stat.exists
 
-  - name: check for nftables.conf
-    stat:
+  - name: Check for filter-input.nft
+    ansible.builtin.stat:
       path: /etc/nftables.d/filter-input.nft
     register: p
 
-  - name: check filter-input.nft
-    assert:
+  - name: Check filter-input.nft
+    ansible.builtin.assert:
       that:
-        - p.stat.exists
+      - p.stat.exists
 
-  - name: list rules
-    command: nft list ruleset
+  - name: List rules
+    ansible.builtin.command:
+      cmd: nft list ruleset
     register: nft
     changed_when: false
 
-  - name: debug rules
-    debug: var=nft
+  - name: Debug rules
+    ansible.builtin.debug:
+      var: nft
 
-  - name: check rules
-    assert:
+  - name: Check rules
+    ansible.builtin.assert:
       that:
-        # The whole line is:
-        # type filter hook input priority 0; policy drop;
-        # However on CentOS will return "priority 0", while Debian will
-        # show "priority filter"
-        - '"type filter hook input" in nft.stdout'
-        - '"type filter hook output" in nft.stdout'
+      # The whole line is:
+      # type filter hook input priority 0; policy drop;
+      # However on CentOS will return "priority 0", while Debian will
+      # show "priority filter"
+      - '"type filter hook input" in nft.stdout'
+      - '"type filter hook output" in nft.stdout'
 
-  - name: service status - active
-    command: systemctl is-active nftables.service
+  - name: Service status - active
+    ansible.builtin.command:
+      cmd: systemctl is-active nftables.service
     register: status
     changed_when: false
 
-  - name: check service status
-    assert:
+  - name: Check service status active
+    ansible.builtin.assert:
       that:
-        - 'status.stdout == "active"'
+      - 'status.stdout == "active"'
 
-  - name: service status - enabled
-    command: systemctl is-enabled nftables.service
+  - name: Service status - enabled
+    ansible.builtin.command:
+      cmd: systemctl is-enabled nftables.service
     register: status
     changed_when: false
 
-  - name: check service status
-    assert:
+  - name: Check service status enabled
+    ansible.builtin.assert:
       that:
-        - 'status.stdout == "enabled"'
+      - 'status.stdout == "enabled"'
