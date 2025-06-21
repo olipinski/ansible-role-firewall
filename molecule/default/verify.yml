@@ -7,45 +7,45 @@
   tasks:
 
   - name: Check for nftables.d
-    stat:
+    ansible.builtin.stat:
       path: /etc/nftables.d
     register: p
 
   - name: Check nftables.d
-    assert:
+    ansible.builtin.assert:
       that:
         - p.stat.exists and p.stat.isdir
 
   - name: Check for nftables.conf
-    stat:
+    ansible.builtin.stat:
       path: /etc/nftables.conf
     register: p
 
   - name: Check nftables.conf
-    assert:
+    ansible.builtin.assert:
       that:
         - p.stat.exists
 
   - name: Check for filter-input.nft
-    stat:
+    ansible.builtin.stat:
       path: /etc/nftables.d/filter-input.nft
     register: p
 
   - name: Check filter-input.nft
-    assert:
+    ansible.builtin.assert:
       that:
         - p.stat.exists
 
   - name: List rules
-    command: nft list ruleset
+    ansible.builtin.command: nft list ruleset
     register: nft
     changed_when: false
 
   - name: Debug rules
-    debug: var=nft
+    ansible.builtin.debug: var=nft
 
   - name: Check rules
-    assert:
+    ansible.builtin.assert:
       that:
         # The whole line is:
         # type filter hook input priority 0; policy drop;
@@ -55,21 +55,21 @@
         - '"type filter hook output" in nft.stdout'
 
   - name: Service status - active
-    command: systemctl is-active nftables.service
+    ansible.builtin.command: systemctl is-active nftables.service
     register: status
     changed_when: false
 
   - name: Check service status
-    assert:
+    ansible.builtin.assert:
       that:
         - 'status.stdout == "active"'
 
   - name: Service status - enabled
-    command: systemctl is-enabled nftables.service
+    ansible.builtin.command: systemctl is-enabled nftables.service
     register: status
     changed_when: false
 
   - name: Check service status
-    assert:
+    ansible.builtin.assert:
       that:
         - 'status.stdout == "enabled"'
