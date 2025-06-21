@@ -25,6 +25,7 @@ platforms:
         ipv4_address: 10.0.2.2
     privileged: true
     pre_build_image: true
+    cgroupns_mode: host
 provisioner:
   name: ansible
   playbooks:
