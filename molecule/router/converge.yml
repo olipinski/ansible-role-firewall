@@ -2,6 +2,7 @@
 - name: Converge
   hosts: all
   become: true
+  gather_facts: false
   vars:
     # Default open ports
     in_tcp_port: '{ ssh, https, http, iscsi-target }'
