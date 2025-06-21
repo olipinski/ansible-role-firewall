@@ -43,7 +43,8 @@
     changed_when: false
 
   - name: Debug rules
-    ansible.builtin.debug: var=nft
+    ansible.builtin.debug:
+      var: nft
 
   - name: Check rules
     ansible.builtin.assert:
