@@ -59,7 +59,7 @@
     register: status
     changed_when: false
 
-  - name: Check service status
+  - name: Check service status active
     ansible.builtin.assert:
       that:
         - 'status.stdout == "active"'
@@ -69,7 +69,7 @@
     register: status
     changed_when: false
 
-  - name: Check service status
+  - name: Check service status enabled
     ansible.builtin.assert:
       that:
         - 'status.stdout == "enabled"'
