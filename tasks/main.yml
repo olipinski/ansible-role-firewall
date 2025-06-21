@@ -3,7 +3,7 @@
 
 # Enable traffic forwarding
 - name: Enable IP v4 forwarding
-  ansible.builtin.sysctl:
+  ansible.posix.sysctl:
     name: "{{ item }}"
     value: '1'
     sysctl_set: true

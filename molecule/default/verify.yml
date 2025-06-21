@@ -14,7 +14,7 @@
   - name: Check nftables.d
     ansible.builtin.assert:
       that:
-        - p.stat.exists and p.stat.isdir
+      - p.stat.exists and p.stat.isdir
 
   - name: Check for nftables.conf
     ansible.builtin.stat:
@@ -24,7 +24,7 @@
   - name: Check nftables.conf
     ansible.builtin.assert:
       that:
-        - p.stat.exists
+      - p.stat.exists
 
   - name: Check for filter-input.nft
     ansible.builtin.stat:
@@ -34,10 +34,11 @@
   - name: Check filter-input.nft
     ansible.builtin.assert:
       that:
-        - p.stat.exists
+      - p.stat.exists
 
   - name: List rules
-    ansible.builtin.command: nft list ruleset
+    ansible.builtin.command:
+      cmd: nft list ruleset
     register: nft
     changed_when: false
 
@@ -47,29 +48,31 @@
   - name: Check rules
     ansible.builtin.assert:
       that:
-        # The whole line is:
-        # type filter hook input priority 0; policy drop;
-        # However on CentOS will return "priority 0", while Debian will
-        # show "priority filter"
-        - '"type filter hook input" in nft.stdout'
-        - '"type filter hook output" in nft.stdout'
+      # The whole line is:
+      # type filter hook input priority 0; policy drop;
+      # However on CentOS will return "priority 0", while Debian will
+      # show "priority filter"
+      - '"type filter hook input" in nft.stdout'
+      - '"type filter hook output" in nft.stdout'
 
   - name: Service status - active
-    ansible.builtin.command: systemctl is-active nftables.service
+    ansible.builtin.command:
+      cmd: systemctl is-active nftables.service
     register: status
     changed_when: false
 
   - name: Check service status active
     ansible.builtin.assert:
       that:
-        - 'status.stdout == "active"'
+      - 'status.stdout == "active"'
 
   - name: Service status - enabled
-    ansible.builtin.command: systemctl is-enabled nftables.service
+    ansible.builtin.command:
+      cmd: systemctl is-enabled nftables.service
     register: status
     changed_when: false
 
   - name: Check service status enabled
     ansible.builtin.assert:
       that:
-        - 'status.stdout == "enabled"'
+      - 'status.stdout == "enabled"'
