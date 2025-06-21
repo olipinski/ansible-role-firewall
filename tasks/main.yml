@@ -43,7 +43,7 @@
   ansible.builtin.file:
     path: "{{ nft_conf_dir_path }}"
     state: directory
-    mode: 0755
+    mode: '0755'
 
 - name: CONFIG generate main conf file
   ansible.builtin.template:
@@ -51,7 +51,7 @@
     dest: "{{ nft_main_conf_path }}"
     owner: root
     group: root
-    mode: 0755
+    mode: '0755'
     backup: "{{ nft_backup_conf }}"
   notify: ['Reload nftables service']
 
@@ -62,7 +62,7 @@
     dest: "{{ nft_define_conf_path }}"
     owner: root
     group: root
-    mode: 0755
+    mode: '0755'
     backup: "{{ nft_backup_conf }}"
   notify: ['Reload nftables service']
 
@@ -73,7 +73,7 @@
     dest: "{{ nft_set_conf_path }}"
     owner: root
     group: root
-    mode: 0755
+    mode: '0755'
     backup: "{{ nft_backup_conf }}"
   notify: ['Reload nftables service']
 
@@ -83,7 +83,7 @@
     dest: "{{ nft_input_conf_path }}"
     owner: root
     group: root
-    mode: 0755
+    mode: '0755'
     backup: "{{ nft_backup_conf }}"
   notify: ['Reload nftables service']
 
@@ -93,7 +93,7 @@
     dest: "{{ nft_output_conf_path }}"
     owner: root
     group: root
-    mode: 0755
+    mode: '0755'
     backup: "{{ nft_backup_conf }}"
   notify: ['Reload nftables service']
 
@@ -103,7 +103,7 @@
     dest: "{{ nft_forward_conf_path }}"
     owner: root
     group: root
-    mode: 0755
+    mode: '0755'
     backup: "{{ nft_backup_conf }}"
   notify: ['Reload nftables service']
   when: firewall_forward_enabled
@@ -114,7 +114,7 @@
     dest: "{{ nft_nat_prerouting_conf_path }}"
     owner: root
     group: root
-    mode: 0755
+    mode: '0755'
     backup: "{{ nft_backup_conf }}"
   notify: ['Reload nftables service']
   when: firewall_nat_enabled
@@ -125,7 +125,7 @@
     dest: "{{ nft_nat_postrouting_conf_path }}"
     owner: root
     group: root
-    mode: 0755
+    mode: '0755'
     backup: "{{ nft_backup_conf }}"
   notify: ['Reload nftables service']
   when: firewall_nat_enabled
