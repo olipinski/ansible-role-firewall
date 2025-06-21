@@ -2,6 +2,7 @@
 extends: default
 
 rules:
+  indent-sequences: consistent
   line-length:
     max: 130
     level: warning

@@ -32,7 +32,7 @@ jobs:
 
       - name: Lint code.
         run: |
-          yamllint -d "{indent-sequences: consistent}" .
+          yamllint .
           ansible-lint
   molecule:
     name: Molecule

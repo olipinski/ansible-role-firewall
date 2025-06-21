@@ -6,45 +6,45 @@
   gather_facts: false
   tasks:
 
-  - name: check for nftables.d
+  - name: Check for nftables.d
     stat:
       path: /etc/nftables.d
     register: p
 
-  - name: check nftables.d
+  - name: Check nftables.d
     assert:
       that:
         - p.stat.exists and p.stat.isdir
 
-  - name: check for nftables.conf
+  - name: Check for nftables.conf
     stat:
       path: /etc/nftables.conf
     register: p
 
-  - name: check nftables.conf
+  - name: Check nftables.conf
     assert:
       that:
         - p.stat.exists
 
-  - name: check for nftables.conf
+  - name: Check for filter-input.nft
     stat:
       path: /etc/nftables.d/filter-input.nft
     register: p
 
-  - name: check filter-input.nft
+  - name: Check filter-input.nft
     assert:
       that:
         - p.stat.exists
 
-  - name: list rules
+  - name: List rules
     command: nft list ruleset
     register: nft
     changed_when: false
 
-  - name: debug rules
+  - name: Debug rules
     debug: var=nft
 
-  - name: check rules
+  - name: Check rules
     assert:
       that:
         # The whole line is:
@@ -54,22 +54,22 @@
         - '"type filter hook input" in nft.stdout'
         - '"type filter hook output" in nft.stdout'
 
-  - name: service status - active
+  - name: Service status - active
     command: systemctl is-active nftables.service
     register: status
     changed_when: false
 
-  - name: check service status
+  - name: Check service status
     assert:
       that:
         - 'status.stdout == "active"'
 
-  - name: service status - enabled
+  - name: Service status - enabled
     command: systemctl is-enabled nftables.service
     register: status
     changed_when: false
 
-  - name: check service status
+  - name: Check service status
     assert:
       that:
         - 'status.stdout == "enabled"'
