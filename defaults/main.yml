@@ -41,6 +41,9 @@ firewall_old_pkg_manage: true
 # The service name to manage.
 firewall_service_name: 'nftables'
 
+# Whether to apply the changes immediately
+firewall_apply: true
+
 #######################################
 # NFTABLES CONFIG FILES AND TEMPLATES #
 #######################################

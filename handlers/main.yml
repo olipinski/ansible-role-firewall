@@ -5,3 +5,4 @@
   systemd:
     state: 'reloaded'
     name: '{{ firewall_service_name }}'
+  when: firewall_apply
